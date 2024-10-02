@@ -19,7 +19,6 @@ module.exports = class FaqsService extends BaseService {
   });
 
   findAllFaqsFilters = catchServiceAsync(async (filters) => {
-    console.log("filters", filters);
     const { query, limit, skip } = await _functions.buildFaqsSearchQuery(
       filters
     );

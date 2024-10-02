@@ -21,7 +21,6 @@ module.exports = class BaseController {
   create = catchControllerAsync(async (req, res) => {
     const { body } = req;
     const result = await this.service.create(body);
-    //res.status(200).send(result);
     return appResponse(res, result);
   });
 
