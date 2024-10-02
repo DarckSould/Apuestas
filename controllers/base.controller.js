@@ -1,4 +1,5 @@
 const catchControllerAsync = require("../utils/catch-controller-async");
+const { appResponse } = require("../utils/app-response");
 
 module.exports = class BaseController {
   constructor(service) {
@@ -14,13 +15,14 @@ module.exports = class BaseController {
   getAll = catchControllerAsync(async (req, res) => {
     const { page, limit } = req.query;
     const result = await this.service.getAll(limit, page);
-    res.status(200).send(result);
+    return appResponse(res, result);
   });
 
   create = catchControllerAsync(async (req, res) => {
     const { body } = req;
     const result = await this.service.create(body);
-    res.status(200).send(result);
+    //res.status(200).send(result);
+    return appResponse(res, result);
   });
 
   update = catchControllerAsync(async (req, res) => {

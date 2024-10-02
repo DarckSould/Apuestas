@@ -19,8 +19,8 @@ module.exports = class BaseService {
   getAll = catchServiceAsync(async (limit = 10, pageNum = 1) => {
     const pagination = limit * (pageNum - 1);
     const totalCount = await this.model.countDocuments();
-    const data = await this.model.find().lean().skip(pagination).limit(limit);
-    return { data, totalCount };
+    const result = await this.model.find().lean().skip(pagination).limit(limit).sort({ createdAt: -1 });
+    return {data: {result, totalCount}};
   });
 
   create = catchServiceAsync(async (entity) => {

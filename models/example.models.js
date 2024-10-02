@@ -6,14 +6,17 @@ const exampleSchema = new Schema(
       type: Number,
       unique: true,
     },
-  }, {
-  timestamps: true,
-});
+  },
+  {
+    timestamps: true,
+  }
+);
 exampleSchema.pre("save", async function (next) {
   const doc = this;
   try {
     if (doc.isNew && !doc.user_id) {
-      const lastExample = await mongoose.model("Example")
+      const lastExample = await mongoose
+        .model("Example")
         .findOne()
         .sort({ createdAt: -1 });
 
