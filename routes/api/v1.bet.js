@@ -4,7 +4,7 @@ module.exports = function ({ BetController }) {
   const router = Router();
 
   // Obtener todas las apuestas
-  router.get('/create', BetController.getAllBets);
+  router.get('/bets', BetController.getAllBets);
 
   // Obtener las apuestas de un usuario específico
   router.get('/bets/user', BetController.getBetsByUserId);

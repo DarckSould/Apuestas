@@ -16,9 +16,18 @@ module.exports = class SportService extends BaseService {
     return { message: 'Sport event created successfully' };
   });
 
-  // Obtener todos los eventos deportivos
-  getAllEvents = catchServiceAsync(async () => {
-    const events = await _sport.find();
+  // Obtener todos los eventos deportivos filtrados por tipo de deporte
+  getAllEvents = catchServiceAsync(async (sportType) => {
+    let events;
+
+    if (sportType) {
+      // Si se proporciona un sportType, filtramos por ese tipo de deporte
+      events = await _sport.find({ sportType });
+    } else {
+      // Si no se proporciona sportType, devolvemos todos los eventos
+      events = await _sport.find();
+    }
+
     return { data: events, message: 'Sport events retrieved successfully' };
   });
 

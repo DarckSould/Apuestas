@@ -3,17 +3,17 @@ const Schema = mongoose.Schema;
 
 // Define the schema for profit calculations
 const profitSchema = new Schema({
-  user: {
-    type: String,
-    required: true, // User for whom the profit is calculated
-    trim: true,
-  },
-  event: {
+  userId: {
     type: Schema.Types.ObjectId,
-    ref: 'SportsEvent', // Reference to the sports event
+    ref: 'User', // Referencia al modelo de usuario
     required: true,
   },
-  bet: {
+  eventId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Sport', // Referencia al modelo de evento deportivo
+    required: true,
+  },
+  betId: {
     type: Schema.Types.ObjectId,
     ref: 'Bet', // Reference to the related bet
     required: true,
@@ -21,6 +21,10 @@ const profitSchema = new Schema({
   profit: {
     type: Number,
     required: true, // Calculated profit (negative for losses)
+  },
+  potentialPayout: {
+    type: Number,
+    required: true, // Simulated potential payout based on the bet
   },
   calculatedAt: {
     type: Date,

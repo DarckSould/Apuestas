@@ -1,22 +1,21 @@
-// routes/profitRoutes.js
 const express = require('express');
 const router = express.Router();
 
 module.exports = ({ ProfitController }) => {
-  // Ruta para obtener todas las ganancias
-  router.get('/', ProfitController.getAllProfits);
+  // Obtener todas las ganancias
+  router.get('/profits', ProfitController.getAllProfits);
 
-  // Ruta para obtener una ganancia por su ID
-  router.get('/:id', ProfitController.getProfitById);
+  // Obtener ganancia por ID
+  router.get('/profits', ProfitController.getProfitById);
 
-  // Ruta para crear una nueva ganancia
-  router.post('/', ProfitController.createProfit);
+  // Crear ganancia
+  router.post('/create', ProfitController.createProfit);
 
-  // Ruta para actualizar una ganancia por su ID
-  router.put('/:id', ProfitController.updateProfit);
+  // Actualizar ganancia por ID
+  router.put('/profits', ProfitController.updateProfit);
 
-  // Ruta para eliminar una ganancia por su ID
-  router.delete('/:id', ProfitController.deleteProfit);
+  // Eliminar ganancia por ID
+  router.delete('/profits', ProfitController.deleteProfit);
 
   return router;
 };

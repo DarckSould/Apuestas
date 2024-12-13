@@ -6,7 +6,7 @@ let _betService = null;
 module.exports = class BetController extends BaseController {
   constructor({ BetService }) {
     super(BetService);
-    _betService = BetService; // Inyección de dependencias
+    _betService = BetService;
   }
 
   // Crear una nueva apuesta

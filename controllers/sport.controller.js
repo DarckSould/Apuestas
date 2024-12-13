@@ -16,9 +16,10 @@ module.exports = class SportsController extends BaseController {
     res.status(201).send(result);
   });
 
-  // Obtener todos los eventos deportivos
+  // Obtener eventos deportivos filtrados por tipo de deporte
   getAllEvents = catchControllerAsync(async (req, res) => {
-    const result = await _sportService.getAllEvents();
+    const { sportType } = req.query; // Obtenemos el parámetro sportType de la consulta
+    const result = await _sportService.getAllEvents(sportType);
     res.status(200).send(result);
   });
 

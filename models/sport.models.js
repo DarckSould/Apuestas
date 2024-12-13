@@ -3,46 +3,51 @@ const Schema = mongoose.Schema;
 
 const sportSchema = new Schema(
   {
-    homeTeam: {
+    sportType: {
       type: String,
       required: true, // Asegura que este campo sea obligatorio
+      enum: ['football', 'basketball', 'tennis'], // Define los tipos de deporte permitidos
+    },
+    homeTeam: {
+      type: String,
+      required: true,
     },
     awayTeam: {
       type: String,
-      required: true, // Asegura que este campo sea obligatorio
+      required: true,
     },
     eventDate: {
       type: Date,
-      required: true, // Asegura que este campo sea obligatorio
+      required: true,
     },
     odds: {
       homeWin: {
         type: Number,
-        required: true, // Asegura que este campo sea obligatorio
+        required: true,
       },
       draw: {
         type: Number,
-        required: true, // Asegura que este campo sea obligatorio
+        required: true,
       },
       awayWin: {
         type: Number,
-        required: true, // Asegura que este campo sea obligatorio
+        required: true,
       },
     },
     status: {
       type: String,
-      default: 'scheduled', // Valor predeterminado para eventos programados
+      default: 'scheduled',
     },
     tournament: {
       type: String,
-      required: true, // Asegura que este campo sea obligatorio
+      required: true,
     },
     stadium: {
       type: String,
-      required: true, // Asegura que este campo sea obligatorio
+      required: true,
     },
   },
-  { timestamps: true } // Esto agrega los campos `createdAt` y `updatedAt`
+  { timestamps: true }
 );
 
 sportSchema.index({ eventDate: 1 });

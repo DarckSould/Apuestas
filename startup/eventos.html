@@ -44,27 +44,58 @@
         justify-content: space-between;
         font-weight: bold;
       }
+
+      .filter {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      select {
+        padding: 8px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <h1>Eventos Deportivos</h1>
+
+    <!-- Filtro de tipo de deporte -->
+    <div class="filter">
+      <select id="sportTypeSelect">
+        <option value="">Selecciona un deporte</option>
+        <option value="football">Fútbol</option>
+        <option value="basketball">Baloncesto</option>
+        <option value="tennis">Tenis</option>
+      </select>
+      <button id="loadEventsBtn">Cargar Eventos</button>
+    </div>
 
     <!-- Sección para mostrar los eventos -->
     <div class="events-list" id="events-list">
       <!-- Aquí se cargarán los eventos desde el servidor -->
     </div>
 
-    <button id="loadEventsBtn">Cargar Eventos</button>
-
     <script>
       // Función para obtener los eventos desde la API externa
       const loadEvents = async () => {
         try {
-          // URL de la API externa
-          const response = await fetch(
-            'http://localhost:3001/v1/api/sport/getAllevents'
-          );
+          // Obtener el tipo de deporte seleccionado
+          const sportType = document.getElementById('sportTypeSelect').value;
 
+          // URL de la API externa con el filtro
+          const url = sportType
+            ? `http://localhost:3001/v1/api/sport/getAllevents?sportType=${sportType}`
+            : 'http://localhost:3001/v1/api/sport/getAllevents';
+
+          const response = await fetch(url);
           const data = await response.json();
 
           if (response.ok) {

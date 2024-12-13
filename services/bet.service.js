@@ -4,7 +4,7 @@ const BaseService = require('./base.service');
 let _bet = null;
 let _sport = null; // Inyectamos el modelo de eventos deportivos
 
-module.exports = class BetsService extends BaseService {
+module.exports = class BetService extends BaseService {
   constructor({ Bet, Sport }) {
     super(Bet);
     _bet = Bet; // Inyección de dependencias para Bet

@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const catchServiceAsync = require('../utils/catch-service-async');
 const BaseService = require('./base.service');
 
@@ -9,17 +11,16 @@ module.exports = class UserService extends BaseService {
     _user = User;
   }
 
-  // Create the user
+  // Crear el usuario
   createUser = catchServiceAsync(async (body) => {
-    console.log(body);
     const newUser = new _user(body);
     await newUser.save();
-    return { message: 'User created successfully' };
+    return { message: 'Usuario creado exitosamente' };
   });
 
-  // Get all users by id
+  // Obtener los usuarios por ID
   getAllUserId = catchServiceAsync(async (id) => {
     const users = await _user.find({ _id: id });
-    return { data: users, message: 'Users retrieved successfully' };
+    return { data: users, message: 'Usuarios obtenidos exitosamente' };
   });
 };
