@@ -1,4 +1,6 @@
 module.exports = {
-  ExampleRoutes: require("./v1.example"),
-  FaqsRoutes: require("./v1.faqs"),
+  BetRoutes: require('./v1.bet'),
+  SportRoutes: require('./v1.sport'),
+  ProfitRoutes: require('./v1.profit'),
+  UserRoutes: require('./v1.user'),
 };

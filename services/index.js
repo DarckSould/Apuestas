@@ -1,4 +1,6 @@
 module.exports = {
-  ExampleService: require("./example.service"),
-  FaqsService: require("./faqs.service"),
+  BetService: require('./bet.service'),
+  SportService: require('./sport.service'),
+  ProfitService: require('./profit.service'),
+  UserService: require('./user.service'),
 };

@@ -1,32 +1,43 @@
 //Configurar nuestro contenedor de injección de depencia
-const { createContainer, asClass, asValue, asFunction } = require("awilix");
+const { createContainer, asClass, asValue, asFunction } = require('awilix');
 
 //Config
-const config = require(".");
+const config = require('.');
 
 //Routes
-const Routes = require("../routes");
+const Routes = require('../routes');
 
 //Services
-const { ExampleService, FaqsService } = require("../services");
+const {
+  BetService,
+  ProfitService,
+  SportService,
+  UserService,
+} = require('../services');
 //Controllers
-const { ExampleController, FaqsController } = require("../controllers");
+const {
+  BetController,
+  ProfitController,
+  SportController,
+  UserController,
+} = require('../controllers');
 
 //Startup
-const { Database, Server } = require("../startup");
+const { Database, Server } = require('../startup');
 
 //Routes
-
-const { ExampleRoutes, FaqsRoutes } = require("../routes/api/index");
+const {
+  BetRoutes,
+  ProfitRoutes,
+  SportRoutes,
+  UserRoutes,
+} = require('../routes/api/index');
 
 //Models
-const { Example, Faqs } = require("../models");
+const { Bet, Profit, Sport, User } = require('../models');
 
-//Funtions
-const { FaqsFunctions } = require("../functions");
-
-const { protect } = require("../middleware/authMiddleware");
-const AuthUtils = require("../utils/auth");
+const { protect } = require('../middleware/authMiddleware');
+const AuthUtils = require('../utils/auth');
 const container = createContainer();
 container
   .register({
@@ -39,33 +50,37 @@ container
   })
   .register({
     //Configuración de los servicios
-    ExampleService: asClass(ExampleService).singleton(),
-    FaqsService: asClass(FaqsService).singleton(),
+    BetService: asClass(BetService).singleton(),
+    ProfitService: asClass(ProfitService).singleton(),
+    SportService: asClass(SportService).singleton(),
+    UserService: asClass(UserService).singleton(),
   })
   .register({
     //Configuración de los controladores
-    ExampleController: asClass(
-      ExampleController.bind(ExampleController)
+    BetController: asClass(BetController.bind(BetController)).singleton(),
+    ProfitController: asClass(
+      ProfitController.bind(ProfitController)
     ).singleton(),
-    FaqsController: asClass(FaqsController.bind(FaqsController)).singleton(),
+    SportController: asClass(SportController.bind(SportController)).singleton(),
+    UserController: asClass(UserController.bind(UserController)).singleton(),
   })
   .register({
     //Configuración de rutas
-    ExampleRoutes: asFunction(ExampleRoutes).singleton(),
-    FaqsRoutes: asFunction(FaqsRoutes).singleton(),
+    BetRoutes: asFunction(BetRoutes).singleton(),
+    ProfitRoutes: asFunction(ProfitRoutes).singleton(),
+    SportRoutes: asFunction(SportRoutes).singleton(),
+    UserRoutes: asFunction(UserRoutes).singleton(),
   })
   .register({
     //Configuración de modelos
-    Example: asValue(Example),
-    Faqs: asValue(Faqs),
+    Bet: asValue(Bet),
+    Profit: asValue(Profit),
+    Sport: asValue(Sport),
+    User: asValue(User),
   })
   .register({
     //middlewares
     AuthMiddleware: asFunction(protect).singleton(),
-  })
-  .register({
-    //Configuración de funciones
-    FaqsFunctions: asClass(FaqsFunctions).singleton(),
   });
 
 module.exports = container;

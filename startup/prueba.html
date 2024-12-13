@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventos Deportivos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .events-list {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .event-item {
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .event-item h3 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .event-item p {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .event-item .odds {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Eventos Deportivos</h1>
+
+    <!-- Sección para mostrar los eventos -->
+    <div class="events-list" id="events-list">
+      <!-- Aquí se cargarán los eventos desde el servidor -->
+    </div>
+
+    <button id="loadEventsBtn">Cargar Eventos</button>
+
+    <script>
+      // Función para obtener los eventos desde la API externa
+      const loadEvents = async () => {
+        try {
+          // URL de la API externa
+          const response = await fetch(
+            'http://localhost:3001/v1/api/sport/getAllevents'
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Limpiamos la lista de eventos antes de agregar los nuevos
+            const eventsList = document.getElementById('events-list');
+            eventsList.innerHTML = '';
+
+            // Si hay eventos, los mostramos
+            if (data && data.data && data.data.length > 0) {
+              data.data.forEach((event) => {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('event-item');
+
+                // Extraemos la información relevante del evento
+                const homeTeam = event.homeTeam || 'Equipo Local'; // Accede al nombre del equipo local
+                const awayTeam = event.awayTeam || 'Equipo Visitante'; // Accede al nombre del equipo visitante
+                const eventDate = event.eventDate
+                  ? new Date(event.eventDate).toLocaleString()
+                  : 'Fecha no disponible';
+                const odds = event.odds
+                  ? event.odds
+                  : { homeWin: 'N/A', draw: 'N/A', awayWin: 'N/A' };
+
+                // Agregamos el contenido del evento
+                eventItem.innerHTML = `
+            <h3>${homeTeam} vs ${awayTeam}</h3>
+            <p><strong>Fecha:</strong> ${eventDate}</p>
+            <div class="odds">
+              <span>Casa: ${odds.homeWin}</span>
+              <span>Empate: ${odds.draw}</span>
+              <span>Visita: ${odds.awayWin}</span>
+            </div>
+          `;
+
+                eventsList.appendChild(eventItem);
+              });
+            } else {
+              eventsList.innerHTML = '<p>No hay eventos disponibles.</p>';
+            }
+          } else {
+            console.error('Error al cargar los eventos', data.message);
+          }
+        } catch (error) {
+          console.error('Error al realizar la petición', error);
+        }
+      };
+
+      // Cargar los eventos cuando se haga click en el botón
+      document
+        .getElementById('loadEventsBtn')
+        .addEventListener('click', loadEvents);
+    </script>
+  </body>
+</html>
